@@ -559,12 +559,12 @@ namespace usb_pad
 			"RFKILL",           /* linux:524 (KEY_RFKILL) */
 		};
 
-		static bool GetEventName(const char* dev_type, int map, int event, const char** name)
+		static bool GetEventName(const char* dev_type, int map, int event, bool is_button, const char** name)
 		{
 			if (!name)
 				return false;
 
-			if (map < JOY_STEERING || !strcmp(dev_type, BuzzDevice::TypeName()))
+			if (is_button)
 			{
 				if (event < (int)key_to_str.size())
 				{
@@ -593,7 +593,7 @@ namespace usb_pad
 			};
 			AxisValue axisVal[ABS_MAX + 1]{};
 			unsigned long absbit[NBITS(ABS_MAX)]{};
-			struct axis_correct abs_correct[ABS_MAX]{};
+			axis_correct abs_correct[ABS_MAX]{};
 
 			inverted = false;
 
@@ -616,9 +616,7 @@ namespace usb_pad
 				while ((len = read(js.second.fd, &event, sizeof(event))) > 0)
 					;
 
-			struct timeval timeout
-			{
-			};
+			timeval timeout{};
 			timeout.tv_sec = 5;
 			int result = select(maxfd + 1, &fdset, NULL, NULL, &timeout);
 
@@ -744,6 +742,8 @@ namespace usb_pad
 			int ret = 0;
 			if (!strcmp(dev_type, BuzzDevice::TypeName()))
 				ret = GtkBuzzConfigure(port, dev_type, "Evdev Settings", evdev::APINAME, GTK_WINDOW(data), apicbs);
+			else if (!strcmp(dev_type, KeyboardmaniaDevice::TypeName()))
+				ret = GtkKeyboardmaniaConfigure(port, dev_type, "Evdev Settings", evdev::APINAME, GTK_WINDOW(data), apicbs);
 			else
 				ret = GtkPadConfigure(port, dev_type, "Evdev Settings", evdev::APINAME, GTK_WINDOW(data), apicbs);
 			return ret;

@@ -93,7 +93,7 @@ namespace usb_pad
 
 	std::list<std::string> KeyboardmaniaDevice::ListAPIs()
 	{
-		return PadDevice::ListAPIs();
+		return {"evdev"};
 	}
 
 	const TCHAR* KeyboardmaniaDevice::LongAPIName(const std::string& name)
@@ -554,13 +554,13 @@ namespace usb_pad
 		if (!proxy)
 		{
 			Console.WriteLn("USB: PAD: Invalid input API.\n");
-			return NULL;
+			return nullptr;
 		}
 
 		Pad* pad = proxy->CreateObject(port, TypeName());
 
 		if (!pad)
-			return NULL;
+			return nullptr;
 
 		pad->Type((PS2WheelTypes)conf.WheelType[port]);
 		PADState* s = new PADState();
@@ -682,13 +682,13 @@ namespace usb_pad
 		if (!proxy)
 		{
 			Console.WriteLn("RBDK: Invalid input API.\n");
-			return NULL;
+			return nullptr;
 		}
 
 		Pad* pad = proxy->CreateObject(port, TypeName());
 
 		if (!pad)
-			return NULL;
+			return nullptr;
 
 		pad->Type(WT_ROCKBAND1_DRUMKIT);
 		PADState* s = new PADState();
@@ -828,13 +828,13 @@ namespace usb_pad
 		if (!proxy)
 		{
 			Console.WriteLn("usb-pad: %s: Invalid input API.", TypeName());
-			return NULL;
+			return nullptr;
 		}
 
 		Pad* pad = proxy->CreateObject(port, TypeName());
 
 		if (!pad)
-			return NULL;
+			return nullptr;
 
 		pad->Type(WT_KEYBOARDMANIA_CONTROLLER);
 		PADState* s = new PADState();
