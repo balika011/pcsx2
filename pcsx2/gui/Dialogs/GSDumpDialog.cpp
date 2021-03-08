@@ -174,13 +174,6 @@ void Dialogs::GSDumpDialog::SelectedDump(wxListEvent& evt)
 
 void Dialogs::GSDumpDialog::RunDump(wxCommandEvent& event)
 {
-	m_debug_mode->Enable();
-	m_start->Enable();
-	m_step->Enable();
-	m_selection->Enable();
-	m_vsync->Enable();
-	m_run->Disable();
-
 	m_thread->m_dump_file = std::make_unique<pxInputStream>(m_selected_dump, new wxFFileInputStream(m_selected_dump));
 
 	if (!(m_thread->m_dump_file)->IsOk())
@@ -190,6 +183,12 @@ void Dialogs::GSDumpDialog::RunDump(wxCommandEvent& event)
 		wxMessageBox(s, _("GSDumpGov"), wxICON_ERROR);
 		return;
 	}
+	m_run->Disable();
+	m_debug_mode->Enable();
+	m_start->Enable();
+	m_step->Enable();
+	m_selection->Enable();
+	m_vsync->Enable();
 	m_thread->Start();
 	return;
 }
