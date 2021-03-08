@@ -414,7 +414,7 @@ EXPORT_C_(int) GSopen2(void** dsp, uint32 flags)
 	static bool stored_toggle_state = false;
 	const bool toggle_state = !!(flags & 4);
 	GSRendererType current_renderer = static_cast<GSRendererType>(flags >> 24);
-	if (current_renderer == GSRendererType::None)
+	if (current_renderer == GSRendererType::NO_RENDERER)
 		current_renderer = theApp.GetCurrentRendererType();
 
 	if (current_renderer != GSRendererType::Undefined && stored_toggle_state != toggle_state)
