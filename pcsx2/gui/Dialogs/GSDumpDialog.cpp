@@ -174,6 +174,8 @@ void Dialogs::GSDumpDialog::SelectedDump(wxListEvent& evt)
 
 void Dialogs::GSDumpDialog::RunDump(wxCommandEvent& event)
 {
+	if (!m_run->IsEnabled())
+		return;
 	m_thread->m_dump_file = std::make_unique<pxInputStream>(m_selected_dump, new wxFFileInputStream(m_selected_dump));
 
 	if (!(m_thread->m_dump_file)->IsOk())
