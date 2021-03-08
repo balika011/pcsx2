@@ -823,5 +823,8 @@ void Dialogs::GSDumpDialog::GSThread::ExecuteTaskInThread()
 
 void Dialogs::GSDumpDialog::PathChanged(wxFileSystemWatcherEvent& event)
 {
-	GetDumpsList();
+	int type = event.GetChangeType();
+
+	if (type == wxFSW_EVENT_CREATE || type == wxFSW_EVENT_DELETE || type == wxFSW_EVENT_RENAME)
+		GetDumpsList();
 }
