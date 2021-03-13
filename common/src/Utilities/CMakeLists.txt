@@ -112,6 +112,7 @@ set(UtilitiesFinalLibs
     ${LIBC_LIBRARIES} # Gold (new linux linker) does not get automatically dependency of dependency
 	${wxWidgets_LIBRARIES}
 	yaml-cpp
+	des
 )
 
 add_pcsx2_lib(${Output} "${UtilitiesFinalSources}" "${UtilitiesFinalLibs}" "${UtilitiesFinalFlags}")
@@ -121,6 +122,7 @@ target_compile_features(${Output} PUBLIC cxx_std_17)
 target_compile_features(${Output}_NO_TLS PUBLIC cxx_std_17)
 target_include_directories(${Output} PUBLIC ../../../3rdparty/include)
 target_include_directories(${Output}_NO_TLS PUBLIC ../../../3rdparty/include)
+target_include_directories(${Output} PUBLIC ../../../3rdparty/des)
 
 if(COMMAND target_precompile_headers)
 	target_precompile_headers(${Output} PRIVATE PrecompiledHeader.h)
